@@ -1,0 +1,46 @@
+@import "~src/app/styles/mixins";
+
+header.header-wrapper {
+  background-color: #020202;
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  align-items: center;
+}
+
+.login-info {
+  color: #ffff;
+  font-size: 1.2em;
+  margin-right: 2rem;
+}
+
+.logo {
+  margin-left: 2rem;
+}
+
+.home-wrapper {
+  .pokemons-list-infos {
+
+    span.title {
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    span.subtitle {
+      font-size: 22px;
+      font-weight: 400;
+    }
+  }
+
+  
+}
+
+.search-input {
+    input {
+        width: 257px;
+        height: 40px;
+      }
+}
+
+// border-top: 1px solid #BDBDBD;
+// border-bottom: 1px solid #BDBDBD;

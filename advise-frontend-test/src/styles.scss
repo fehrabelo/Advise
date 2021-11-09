@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@use "./app/styles/mixins";
+// @use "./scss/mixins";
+
+html,
+body {
+ margin: 0;
+}
