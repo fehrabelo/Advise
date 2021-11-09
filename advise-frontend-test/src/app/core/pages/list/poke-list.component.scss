@@ -58,9 +58,27 @@ header.header-wrapper {
 
 .dropdown-pageSize-exihibit {
   text-align: left;
-  padding: 1rem;
+  padding: 1rem 0;
   border-top: 1px solid #BDBDBD;
   border-bottom: 1px solid #BDBDBD;
+}
+
+.home-wrapper {
+  display: grid;
+  grid-template-columns: 7% 93%;
+}
+
+.pokemons-list-infos {
+  margin: 2rem 2rem 0 1rem;
+}
+
+.grey-column {
+  background: #F4F4F4;
+}
+
+footer.footer-wrapper {
+  height: 31px;
+  background-color: #020202;
 }
 
 // border-top: 1px solid #BDBDBD;

@@ -28,6 +28,7 @@ export class PokeListComponent implements OnInit, OnDestroy {
   search = new FormControl("", Validators.nullValidator);
 
   listPokemons: any;
+  pokemonsQuantity: any;
 
   constructor(
     private pokeService: PokeService
@@ -49,8 +50,23 @@ export class PokeListComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.pokeService.getAllPokemons(this.pageSize)
         .subscribe(response => {
-          this.listPokemons = response.results
+          this.listPokemons = response
           console.log(response);
+
+          const listpoke = response.results
+          const pokeArrayLenght = listpoke.length
+          for (var i = 0; i < pokeArrayLenght; i++) {
+            
+            console.log(listpoke[i]);
+            //Do something
+          }
+
+          var myStringArray = ["Hello", "World"];
+          var arrayLength = myStringArray.length;
+          for (var i = 0; i < arrayLength; i++) {
+            console.log(myStringArray[i]);
+            //Do something
+          }
         }))
   }
 
