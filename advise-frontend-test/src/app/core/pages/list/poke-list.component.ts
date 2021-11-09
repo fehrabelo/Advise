@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription, Subject } from 'rxjs';
 import { PokeService } from './service/poke.service';
+import { debounceTime, takeUntil, switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-poke-list',
@@ -11,11 +14,20 @@ export class PokeListComponent implements OnInit, OnDestroy {
 
   // observable variable
   subs: Subscription[] = [];
- 
+
+
   //pagination variables
-   page: number = 1;
-   pageSize: number = 5;
-   showcaseMax: number = 20;
+  page: number = 1;
+  pageSize: number = 5;
+  showcaseMax: number = 20;
+
+  // subjects 
+  onDestroy$ = new Subject<boolean>();
+
+  //Form Controls
+  search = new FormControl("", Validators.nullValidator);
+
+  listPokemons: any;
 
   constructor(
     private pokeService: PokeService
@@ -23,24 +35,31 @@ export class PokeListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllPokemons();
+
+    this.search.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .pipe(debounceTime(500))
+      .subscribe((value: string) => {
+        console.log(value);
+        this.searchPokemon(value);
+      });
   }
 
   getAllPokemons() {
     this.subs.push(
       this.pokeService.getAllPokemons(this.pageSize)
         .subscribe(response => {
+          this.listPokemons = response.results
           console.log(response);
         }))
   }
 
-  getPokemonsImages(){
-    
-  }
-
-  searchPokemon(){
-    this.subs.push(
-
-    )
+  searchPokemon(searchInfo: string) {
+    this.pokeService.searchPokemon(searchInfo)
+      .subscribe(data => {
+        this.listPokemons = data
+        console.log(data);
+      })
   }
 
   pageChanged(event: any) {
@@ -49,6 +68,7 @@ export class PokeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.onDestroy$.next(true);
     this.subs.map((subs: Subscription) => subs.unsubscribe());
   }
 }

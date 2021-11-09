@@ -5,6 +5,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { PokeListComponent } from './pages/list/poke-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     CoreRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularSvgIconModule.forRoot()
   ]
 })

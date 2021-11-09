@@ -10,8 +10,12 @@ header.header-wrapper {
 
 .login-info {
   color: #ffff;
-  font-size: 1.2em;
+  font-size: 21px;
   margin-right: 2rem;
+
+  @include screen-xs {
+    font-size: 16px;
+  }
 }
 
 .logo {
@@ -21,25 +25,42 @@ header.header-wrapper {
 .home-wrapper {
   .pokemons-list-infos {
 
-    span.title {
+    p.title {
       font-size: 34px;
       font-weight: 700;
     }
 
-    span.subtitle {
+    p.subtitle {
       font-size: 22px;
       font-weight: 400;
     }
   }
 
-  
+
 }
 
 .search-input {
-    input {
-        width: 257px;
-        height: 40px;
-      }
+  input {
+    width: 257px;
+    height: 40px;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    margin-left: -35px;
+
+    svg-icon {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+
+.dropdown-pageSize-exihibit {
+  text-align: left;
+  padding: 1rem;
+  border-top: 1px solid #BDBDBD;
+  border-bottom: 1px solid #BDBDBD;
 }
 
 // border-top: 1px solid #BDBDBD;
