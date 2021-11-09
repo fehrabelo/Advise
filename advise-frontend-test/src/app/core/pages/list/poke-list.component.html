@@ -1,1 +1,40 @@
-<p>poke-list works!</p>
+<header class="header-wrapper">
+    <div class="logo">
+        <svg-icon src="assets/svgs/advise-logo.svg"></svg-icon>
+    </div>
+    <div class="login-info">
+        <span>Olá, Felipe Rabelo</span>
+    </div>
+</header>
+<div class="home-wrapper">
+<div class="grey-column">
+    a
+</div>
+<div class="pokemons-list-infos">
+    <div class="">
+
+        <div>
+            <span class="title">Fase teste prático Front_end</span>
+            <span class="subtitle">pokebusca</span>
+        </div>
+        <div class="search-input">
+            <input type="text" placeholder="Buscar">
+        </div>
+    
+    </div>
+        <div class="showcaseOptions text-right">
+        <div class="dropdown" *ngIf="page == 1">
+            <span name="Alterar quantidade de items por página" class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Exibindo {{pageSize}} de 20 itens
+            </span>
+            <ul class="dropdown-menu dropdown-menu-right py-0">
+                <li class="px-2 py-2 text-center" *ngIf="pageSize != 5" (click)="pageSize = 5;getAllPokemons()">5 items</li>
+                <li class="px-2 py-2 text-center" *ngIf="pageSize != 10" (click)="pageSize = 10;getAllPokemons();">10 items</li>
+                <li class="px-2 py-2 text-center" *ngIf="pageSize != 15" (click)="pageSize = 15;getAllPokemons();">15 items</li>
+                <li class="px-2 py-2 text-center" *ngIf="pageSize != 20" (click)="pageSize = 20;getAllPokemons();">20 items</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+<footer class="footer-wrapper"></footer>

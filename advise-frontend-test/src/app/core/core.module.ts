@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CoreRoutingModule } from './core-routing.module';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { PokeListComponent } from './pages/list/poke-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { PokeListComponent } from './pages/list/poke-list.component';
   imports: [
     CommonModule,
     CoreRoutingModule,
+    HttpClientModule,
     AngularSvgIconModule.forRoot()
   ]
 })
