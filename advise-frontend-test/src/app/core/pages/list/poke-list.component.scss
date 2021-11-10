@@ -38,6 +38,7 @@ header.header-wrapper {
   p.title {
     font-size: 34px;
     font-weight: 700;
+
     @include screen-xs {
       font-size: 27px;
     }
@@ -54,6 +55,7 @@ header.header-wrapper {
   @include screen-xs {
     padding-bottom: 2rem;
   }
+
   input {
     width: 257px;
     height: 40px;
@@ -82,9 +84,11 @@ header.header-wrapper {
 
   .pokemon-home-options {
     display: flex;
+
     @include screen-md {
       justify-content: space-between;
     }
+
     @include screen-xs {
       flex-direction: column;
       align-items: center;
@@ -103,6 +107,7 @@ header.header-wrapper {
   @include screen-xs {
     margin: 1rem 0 0;
   }
+
   margin: 0 1rem;
 }
 
@@ -121,6 +126,7 @@ header.header-wrapper {
 .pokemon-info {
   border-bottom: 1px solid #BDBDBD;
   padding: 1rem;
+
   @include screen-md {
     display: flex;
   }
@@ -129,8 +135,8 @@ header.header-wrapper {
 .poke-description {
   margin-top: 2rem;
   text-align: justify;
-    font-size: 13px;
-    font-weight: 500;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 p.poke-info {
@@ -139,6 +145,7 @@ p.poke-info {
     font-size: 22px;
     margin-bottom: 2px;
   }
+
   font-size: 16px;
   font-weight: 700;
 }
@@ -147,10 +154,14 @@ p.poke-info {
   @include screen-md {
     justify-content: end;
   }
-  @include screen-xs {
-  }
+
+  @include screen-xs {}
+
   padding: 2rem;
   font-size: 14px;
   display: flex;
 }
 
+ngb-pagination {
+  margin-left: 2rem;
+}
