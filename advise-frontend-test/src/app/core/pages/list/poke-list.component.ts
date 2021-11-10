@@ -28,8 +28,10 @@ export class PokeListComponent implements OnInit, OnDestroy {
   search = new FormControl("", Validators.nullValidator);
 
   listPokemons: any;
-  pokemonsQuantity: any;
-
+  pokeCount: any;
+  pokemonSearchResult: any;
+  pokeInfo: any = [];
+  maxPagination: string;
   constructor(
     private pokeService: PokeService
   ) { }
@@ -50,22 +52,19 @@ export class PokeListComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.pokeService.getAllPokemons(this.pageSize)
         .subscribe(response => {
-          this.listPokemons = response
-          console.log(response);
+          this.pokeCount = response.count
 
-          const listpoke = response.results
-          const pokeArrayLenght = listpoke.length
+          const paginationResult = this.pokeCount / 20
+          this.maxPagination = paginationResult.toFixed(0)
+
+          const listpokemons = response.results
+          const pokeArrayLenght = listpokemons.length
           for (var i = 0; i < pokeArrayLenght; i++) {
-            
-            console.log(listpoke[i]);
-            //Do something
-          }
-
-          var myStringArray = ["Hello", "World"];
-          var arrayLength = myStringArray.length;
-          for (var i = 0; i < arrayLength; i++) {
-            console.log(myStringArray[i]);
-            //Do something
+            this.pokeService.getPokeIcon(listpokemons[i].url)
+              .subscribe(response => {
+                this.pokeInfo.push(response)
+                console.log(this.pokeInfo);
+              })
           }
         }))
   }
@@ -73,8 +72,9 @@ export class PokeListComponent implements OnInit, OnDestroy {
   searchPokemon(searchInfo: string) {
     this.pokeService.searchPokemon(searchInfo)
       .subscribe(data => {
-        this.listPokemons = data
+        this.pokemonSearchResult = data
         console.log(data);
+        
       })
   }
 

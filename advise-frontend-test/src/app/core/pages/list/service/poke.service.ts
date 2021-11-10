@@ -24,6 +24,9 @@ export class PokeService {
     return this.http.get<any>(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`)
   }
 
+  getPokeIcon(pokeUrl: any) {
+    return this.http.get<any>(`${pokeUrl}`)
+  }
   searchPokemon(pokeData: any) {
     return this.http.get<any>(`${this.pokeUrl}/${pokeData}`)
   }

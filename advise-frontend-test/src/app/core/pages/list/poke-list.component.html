@@ -32,14 +32,44 @@
       </div>
       <div class="dropdown-pageSize-exihibit">
         <span class="text-black">
-          Exibindo 20 itens de {{listPokemons?.count}}
+          Exibindo 20 itens de {{pokeCount}}
         </span>
       </div>
-      <div>
-        <span>Características do pokemon dolor sit amet, consectetur adipiscing elit. In ultricies nunc at odio tempor
-          tincidunt. Sed sit amet dolor velit. Donec convallis tellus ut porta molestie. Suspendisse condimentum et dui
-          in
-          aliquam.</span>
+
+      <div *ngIf="pokeInfo" class="main-div-border">
+        <div *ngFor="let poke of pokeInfo" class="pokemon-info">
+          <div class="pokemon-icon">
+            <img src="{{poke?.sprites.front_default}}" >
+        </div>
+        
+        <div class="pokemon-description">
+          <p class="mb-0">{{poke?.name | titlecase}} #{{poke?.id}}</p>
+          <span>Características do pokemon dolor sit amet, consectetur adipiscing elit. In ultricies nunc at odio tempor
+            tincidunt. Sed sit amet dolor velit. Donec convallis tellus ut porta molestie. Suspendisse condimentum et dui
+            in
+            aliquam.</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="pokemonSearchResult" class="main-div-border">
+        <div  class="pokemon-info">
+          <div class="pokemon-icon">
+            <img src="{{pokemonSearchResult?.sprites.front_default}}" >
+        </div>
+        
+        <div class="pokemon-description">
+          <p class="mb-0">{{pokemonSearchResult?.name | titlecase}} #{{pokemonSearchResult?.id}}</p>
+          <span>Características do pokemon dolor sit amet, consectetur adipiscing elit. In ultricies nunc at odio tempor
+            tincidunt. Sed sit amet dolor velit. Donec convallis tellus ut porta molestie. Suspendisse condimentum et dui
+            in
+            aliquam.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination">
+<span> 1 de {{maxPagination}} páginas</span>
       </div>
     </div>
   </div>
