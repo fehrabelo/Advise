@@ -1,9 +1,6 @@
-<div class="test">
-
-
-  <header class="header-wrapper">
-    <div class="logo">
-      <svg-icon src="assets/svgs/advise-logo.svg"></svg-icon>
+  <header class="header-wrapper" #scrollUpTo>
+    <div [routerLink]="['']"  class="logo">
+      <svg-icon   src="assets/svgs/advise-logo.svg"></svg-icon>
     </div>
     <div class="login-info">
       <span>Olá, Felipe Rabelo</span>
@@ -12,11 +9,10 @@
   </header>
   <div class="home-wrapper">
     <div class="grey-column">
-
     </div>
     <div class="pokemons-list-infos">
-      <div class="d-flex justify-content-between">
-        <div>
+      <div class="pokemon-home-options">
+        <div class="text-center">
           <p class="title mb-0">Fase teste prático Front_end</p>
           <p class="subtitle">pokebusca</p>
         </div>
@@ -36,42 +32,50 @@
         </span>
       </div>
 
-      <div *ngIf="pokeInfo" class="main-div-border">
+      <div *ngIf="pokeListExihibit" class="main-div-border">
         <div *ngFor="let poke of pokeInfo" class="pokemon-info">
           <div class="pokemon-icon">
-            <img src="{{poke?.sprites.front_default}}" >
-        </div>
-        
-        <div class="pokemon-description">
-          <p class="mb-0">{{poke?.name | titlecase}} #{{poke?.id}}</p>
-          <span>Características do pokemon dolor sit amet, consectetur adipiscing elit. In ultricies nunc at odio tempor
-            tincidunt. Sed sit amet dolor velit. Donec convallis tellus ut porta molestie. Suspendisse condimentum et dui
-            in
-            aliquam.</span>
+            <img src="{{poke?.sprites.front_default}}">
+          </div>
+
+          <div class="pokemon-data">
+            <p class="poke-info">{{poke?.name | titlecase}} #{{poke?.id}}</p>
+            <span class="poke-description">Características do pokemon dolor sit amet, consectetur adipiscing elit. In
+              ultricies nunc at odio tempor
+              tincidunt. Sed sit amet dolor velit. Donec convallis tellus ut porta molestie. Suspendisse condimentum et
+              dui
+              in
+              aliquam.</span>
           </div>
         </div>
       </div>
 
-      <div *ngIf="pokemonSearchResult" class="main-div-border">
-        <div  class="pokemon-info">
+      <div *ngIf="!pokeListExihibit" class="main-div-border">
+        <div class="pokemon-info">
           <div class="pokemon-icon">
-            <img src="{{pokemonSearchResult?.sprites.front_default}}" >
-        </div>
-        
-        <div class="pokemon-description">
-          <p class="mb-0">{{pokemonSearchResult?.name | titlecase}} #{{pokemonSearchResult?.id}}</p>
-          <span>Características do pokemon dolor sit amet, consectetur adipiscing elit. In ultricies nunc at odio tempor
-            tincidunt. Sed sit amet dolor velit. Donec convallis tellus ut porta molestie. Suspendisse condimentum et dui
-            in
-            aliquam.</span>
+            <img src="{{pokemonSearchResult?.sprites.front_default}}">
+          </div>
+
+          <div class="pokemon-data">
+            <p class="poke-info">{{pokemonSearchResult?.name | titlecase}} #{{pokemonSearchResult?.id}}</p>
+            <span class="poke-description">Características do pokemon dolor sit amet, consectetur adipiscing elit. In
+              ultricies nunc at odio tempor
+              tincidunt. Sed sit amet dolor velit. Donec convallis tellus ut porta molestie. Suspendisse condimentum et
+              dui
+              in
+              aliquam.</span>
           </div>
         </div>
       </div>
-
-      <div class="pagination">
-<span> 1 de {{maxPagination}} páginas</span>
+  
+      <div class="pagination-style">
+        <span> 1 de {{maxPagination}} páginas</span>
+        <ngb-pagination
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="maxPagination" (click)="scrollTop()" [boundaryLinks]="true" (pageChange)="pageChanged($event)"></ngb-pagination>
       </div>
     </div>
   </div>
   <footer class="footer-wrapper"></footer>
-</div>
+

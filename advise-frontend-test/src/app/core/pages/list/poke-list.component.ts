@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Subject } from 'rxjs';
 import { PokeService } from './service/poke.service';
@@ -12,14 +12,17 @@ import { debounceTime, takeUntil, switchMap } from 'rxjs/operators';
 })
 export class PokeListComponent implements OnInit, OnDestroy {
 
+  @ViewChild("scrollUpTo", { static: false }) title: ElementRef
+
+
   // observable variable
   subs: Subscription[] = [];
 
-
+  pokeListExihibit = true;
   //pagination variables
   page: number = 1;
-  pageSize: number = 5;
-  showcaseMax: number = 20;
+  pageSize: number = 20;
+  maxPagination: any;
 
   // subjects 
   onDestroy$ = new Subject<boolean>();
@@ -31,7 +34,6 @@ export class PokeListComponent implements OnInit, OnDestroy {
   pokeCount: any;
   pokemonSearchResult: any;
   pokeInfo: any = [];
-  maxPagination: string;
   constructor(
     private pokeService: PokeService
   ) { }
@@ -41,7 +43,7 @@ export class PokeListComponent implements OnInit, OnDestroy {
 
     this.search.valueChanges
       .pipe(takeUntil(this.onDestroy$))
-      .pipe(debounceTime(500))
+      .pipe(debounceTime(800))
       .subscribe((value: string) => {
         console.log(value);
         this.searchPokemon(value);
@@ -63,7 +65,6 @@ export class PokeListComponent implements OnInit, OnDestroy {
             this.pokeService.getPokeIcon(listpokemons[i].url)
               .subscribe(response => {
                 this.pokeInfo.push(response)
-                console.log(this.pokeInfo);
               })
           }
         }))
@@ -72,10 +73,10 @@ export class PokeListComponent implements OnInit, OnDestroy {
   searchPokemon(searchInfo: string) {
     this.pokeService.searchPokemon(searchInfo)
       .subscribe(data => {
+        this.pokeListExihibit = false
         this.pokemonSearchResult = data
-        console.log(data);
-        
       })
+
   }
 
   pageChanged(event: any) {
@@ -83,6 +84,10 @@ export class PokeListComponent implements OnInit, OnDestroy {
     this.getAllPokemons();
   }
 
+  //scroll pagination
+  scrollTop() {
+    this.title.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
   ngOnDestroy(): void {
     this.onDestroy$.next(true);
     this.subs.map((subs: Subscription) => subs.unsubscribe());
