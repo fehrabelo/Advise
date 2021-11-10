@@ -1,6 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription, Subject } from 'rxjs';
 import { PokeService } from './service/poke.service';
+import { debounceTime, takeUntil, switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-poke-list',
@@ -9,38 +12,71 @@ import { PokeService } from './service/poke.service';
 })
 export class PokeListComponent implements OnInit, OnDestroy {
 
+  @ViewChild("scrollUpTo", { static: false }) title: ElementRef
+
+
   // observable variable
   subs: Subscription[] = [];
- 
-  //pagination variables
-   page: number = 1;
-   pageSize: number = 5;
-   showcaseMax: number = 20;
 
+  pokeListExihibit = true;
+  //pagination variables
+  page: number = 1;
+  pageSize: number = 20;
+  maxPagination: any;
+
+  // subjects 
+  onDestroy$ = new Subject<boolean>();
+
+  //Form Controls
+  search = new FormControl("", Validators.nullValidator);
+
+  listPokemons: any;
+  pokeCount: any;
+  pokemonSearchResult: any;
+  pokeInfo: any = [];
   constructor(
     private pokeService: PokeService
   ) { }
 
   ngOnInit(): void {
     this.getAllPokemons();
+
+    this.search.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .pipe(debounceTime(800))
+      .subscribe((value: string) => {
+        console.log(value);
+        this.searchPokemon(value);
+      });
   }
 
   getAllPokemons() {
     this.subs.push(
       this.pokeService.getAllPokemons(this.pageSize)
         .subscribe(response => {
-          console.log(response);
+          this.pokeCount = response.count
+
+          const paginationResult = this.pokeCount / 20
+          this.maxPagination = paginationResult.toFixed(0)
+
+          const listpokemons = response.results
+          const pokeArrayLenght = listpokemons.length
+          for (var i = 0; i < pokeArrayLenght; i++) {
+            this.pokeService.getPokeIcon(listpokemons[i].url)
+              .subscribe(response => {
+                this.pokeInfo.push(response)
+              })
+          }
         }))
   }
 
-  getPokemonsImages(){
-    
-  }
+  searchPokemon(searchInfo: string) {
+    this.pokeService.searchPokemon(searchInfo)
+      .subscribe(data => {
+        this.pokeListExihibit = false
+        this.pokemonSearchResult = data
+      })
 
-  searchPokemon(){
-    this.subs.push(
-
-    )
   }
 
   pageChanged(event: any) {
@@ -48,7 +84,12 @@ export class PokeListComponent implements OnInit, OnDestroy {
     this.getAllPokemons();
   }
 
+  //scroll pagination
+  scrollTop() {
+    this.title.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
   ngOnDestroy(): void {
+    this.onDestroy$.next(true);
     this.subs.map((subs: Subscription) => subs.unsubscribe());
   }
 }
